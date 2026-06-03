@@ -2,39 +2,51 @@ name: Release
 
 on:
   push:
-    branches: [main]
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version without the v prefix, for example 1.0.0"
+        required: true
+        type: string
 
 permissions:
   contents: write
-  pull-requests: write
   id-token: write
   attestations: write
 
 jobs:
-  release-please:
-    runs-on: ubuntu-24.04
-    outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
-      version: ${{ steps.release.outputs.version }}
-    steps:
-      - name: Create/update release PR
-        id: release
-        uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38 # v4
-        with:
-          release-type: simple
-
   build:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.release_created }}
     runs-on: ubuntu-24.04
-    env:
-      VERSION: ${{ needs.release-please.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           submodules: recursive
+
+      - name: Resolve release version
+        id: release
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            version="${{ inputs.version }}"
+          else
+            version="${GITHUB_REF_NAME#v}"
+          fi
+
+          case "$version" in
+            v*) version="${version#v}" ;;
+          esac
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+[.][0-9]+[.][0-9]+([-+][0-9A-Za-z.-]+)?$'; then
+            echo "invalid release version: $version" >&2
+            exit 1
+          fi
+
+          tag_name="v$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag_name=$tag_name" >> "$GITHUB_OUTPUT"
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+          echo "TAG_NAME=$tag_name" >> "$GITHUB_ENV"
 
       - name: Build static binaries (musl)
         run: |
@@ -83,11 +95,21 @@ jobs:
           nfpm pkg --packager deb \
             --target "dist/agent-safe-guard_${VERSION}_amd64.deb"
 
+      - name: Ensure GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$TAG_NAME" >/dev/null 2>&1 || \
+            gh release create "$TAG_NAME" \
+              --target "$GITHUB_SHA" \
+              --title "$TAG_NAME" \
+              --notes "Agent Safe Guard $TAG_NAME"
+
       - name: Upload release assets
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload "${{ needs.release-please.outputs.tag_name }}" \
+          gh release upload "$TAG_NAME" \
             dist/agent-safe-guard-${VERSION}-linux-amd64.tar.gz \
             dist/agent-safe-guard_${VERSION}_amd64.deb \
             --clobber
