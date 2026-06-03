@@ -1,0 +1,8 @@
+interface:
+  display_name: "ISO AI Governance"
+  short_description: "Govern ISO 27001/42001 with AI agents"
+  brand_color: "#0F766E"
+  default_prompt: "Use $iso-ai-governance to plan ISO 27001/42001 governance for AI agents, skills, extensions, MCPs, evidence, and enforcement."
+
+policy:
+  allow_implicit_invocation: true

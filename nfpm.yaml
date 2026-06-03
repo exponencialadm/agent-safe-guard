@@ -1,7 +1,7 @@
 name: agent-safe-guard
 arch: amd64
 platform: linux
-version: 1.0.0
+version: 1.1.0
 maintainer: Exponencial Administração & Tecnologia
 description: Native safety hooks for AI coding agents
 vendor: Exponencial Administração & Tecnologia

@@ -320,6 +320,7 @@ Catalog packages use SHA256 integrity checks. The daemon compiles catalog rule p
 This repository ships an installable Codex skill pack:
 
 - [`skills/agent-safe-guard`](skills/agent-safe-guard/SKILL.md) — install and operate native hooks.
+- [`skills/iso-ai-governance`](skills/iso-ai-governance/SKILL.md) — orchestrate ISO 27001/42001 governance for AI agents, skills, extensions, MCPs, evidence, and enforcement.
 - [`skills/agent-inventory`](skills/agent-inventory/SKILL.md) — discover agents, skills, MCP configs, and editor extensions.
 - [`skills/extension-risk-audit`](skills/extension-risk-audit/SKILL.md) — audit VS Code/Cursor/Windsurf extension risk.
 - [`skills/evidence-sync`](skills/evidence-sync/SKILL.md) — package scan results as ISO evidence envelopes.

@@ -1,0 +1,59 @@
+{
+  "schema": "https://exponencialadm.net/schemas/iso-ai-control-map.v1.json",
+  "themes": [
+    {
+      "id": "visibility",
+      "title": "AI-agent visibility and inventory",
+      "question": "Which AI agents, skills, MCPs, extensions, automations, and integrations are running?",
+      "skills": ["agent-inventory", "extension-risk-audit"],
+      "iso27001": ["A.5.9", "A.8.1", "A.8.2", "A.8.9"],
+      "iso42001": ["AI system inventory", "AI use-case inventory", "AI impact assessment"],
+      "evidence": ["agent inventory", "extension audit", "owner and purpose register"]
+    },
+    {
+      "id": "policy",
+      "title": "Allowed use, approvals, exceptions, and ownership",
+      "question": "Who may use which agent, under what scope, with which approval and review cadence?",
+      "skills": ["ai-policy-pack", "evidence-sync"],
+      "iso27001": ["A.5.1", "A.5.15", "A.5.18", "A.5.36"],
+      "iso42001": ["roles and responsibilities", "AI policy", "risk treatment"],
+      "evidence": ["approved-use policy", "exception register", "periodic review"]
+    },
+    {
+      "id": "enforcement",
+      "title": "Technical enforcement for agents and tools",
+      "question": "What prevents unsafe commands, secret reads, unsafe tool calls, and uncontrolled outputs?",
+      "skills": ["agent-safe-guard"],
+      "iso27001": ["A.8.12", "A.8.15", "A.8.16", "A.8.18", "A.8.32"],
+      "iso42001": ["AI operational controls", "monitoring", "human oversight"],
+      "evidence": ["blocked events", "hook configuration", "rule catalog", "output-filter logs"]
+    },
+    {
+      "id": "vulnerability",
+      "title": "Technical vulnerability management",
+      "question": "Are dependency vulnerabilities detected, remediated, accepted, and evidenced?",
+      "skills": ["iso-remediacao", "evidence-sync"],
+      "iso27001": ["A.8.8"],
+      "iso42001": ["AI system lifecycle controls"],
+      "evidence": ["npm audit evidence", "remediation record", "accepted residual risk"]
+    },
+    {
+      "id": "evidence",
+      "title": "Continuous evidence and audit readiness",
+      "question": "Can compliance evidence be regenerated, reviewed, retained, and traced to controls?",
+      "skills": ["evidence-sync"],
+      "iso27001": ["A.5.33", "A.8.15", "A.8.16"],
+      "iso42001": ["AI monitoring", "management review", "continual improvement"],
+      "evidence": ["evidence envelopes", "hashes", "review log", "retention policy"]
+    },
+    {
+      "id": "incident",
+      "title": "Agent-related incident response",
+      "question": "What happens after unsafe autonomy, data exposure, extension abuse, or credential exposure?",
+      "skills": ["ai-policy-pack", "agent-safe-guard", "evidence-sync"],
+      "iso27001": ["A.5.24", "A.5.25", "A.5.26", "A.5.27"],
+      "iso42001": ["AI incident process", "corrective action"],
+      "evidence": ["incident timeline", "agent logs", "containment actions", "post-incident review"]
+    }
+  ]
+}
