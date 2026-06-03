@@ -1,6 +1,6 @@
 ---
 name: agent-safe-guard
-description: Use when installing, configuring, auditing, publishing, or extending Agent Safe Guard: native Linux safety hooks for AI coding agents, Claude Code hook enforcement, Codex/OpenClaw-style agent governance, rule catalogs, output filters, secret-read defenses, repo-map injection, and the asg-cli/asg-install/asg-uninstall tooling.
+description: "Use when installing, configuring, auditing, publishing, or extending Agent Safe Guard: native Linux safety hooks for AI coding agents, Claude Code hook enforcement, Codex/OpenClaw-style agent governance, rule catalogs, output filters, secret-read defenses, repo-map injection, and the asg-cli/asg-install/asg-uninstall tooling."
 metadata:
   short-description: Install and operate Agent Safe Guard hooks
 ---

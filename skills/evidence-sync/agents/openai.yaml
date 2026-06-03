@@ -1,0 +1,8 @@
+interface:
+  display_name: "Evidence Sync"
+  short_description: "Package agent governance evidence for ISO"
+  brand_color: "#334155"
+  default_prompt: "Use $evidence-sync to package scan results into ISO evidence without exposing secrets."
+
+policy:
+  allow_implicit_invocation: true

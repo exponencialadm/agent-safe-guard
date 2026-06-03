@@ -1,0 +1,77 @@
+{
+  "schema": "https://exponencialadm.net/schemas/ai-agent-policy-pack.v1.json",
+  "controls": [
+    {
+      "id": "AIAG-INV-001",
+      "title": "Approved AI-agent inventory",
+      "objective": "Maintain a current inventory of AI agents, skills, MCPs, extensions, and automation surfaces.",
+      "owner": "IT/Security",
+      "evidence": ["agent inventory JSON", "approval records", "periodic review log"],
+      "iso27001": ["A.5.9", "A.8.1", "A.8.2"],
+      "iso42001": ["AI system inventory", "AI risk management"]
+    },
+    {
+      "id": "AIAG-SKILL-002",
+      "title": "Skill provenance and review",
+      "objective": "Only approved skills from known sources may be installed or updated.",
+      "owner": "Engineering/Security",
+      "evidence": ["skill name", "version or commit", "source URL", "reviewer", "approval date"],
+      "iso27001": ["A.5.19", "A.8.8", "A.8.32"],
+      "iso42001": ["AI supply-chain governance"]
+    },
+    {
+      "id": "AIAG-EXT-003",
+      "title": "Editor extension risk control",
+      "objective": "Classify VS Code/Cursor/Windsurf extensions that can execute code, read workspaces, call networks, or use AI.",
+      "owner": "Endpoint/Security",
+      "evidence": ["extension audit", "risk classification", "allow/block decision"],
+      "iso27001": ["A.8.8", "A.8.9", "A.8.32"],
+      "iso42001": ["AI tool monitoring"]
+    },
+    {
+      "id": "AIAG-MCP-004",
+      "title": "MCP and tool approval",
+      "objective": "Require approval before agents receive tools that access browsers, credentials, cloud APIs, databases, source control, or messaging.",
+      "owner": "Security/Platform",
+      "evidence": ["tool manifest", "scope", "approver", "expiry", "logs"],
+      "iso27001": ["A.5.15", "A.5.18", "A.8.18"],
+      "iso42001": ["AI roles and responsibilities"]
+    },
+    {
+      "id": "AIAG-SECRET-005",
+      "title": "Secret access denial",
+      "objective": "Agents must not read, print, commit, summarize, or transmit secrets unless a narrowly approved break-glass process exists.",
+      "owner": "Security",
+      "evidence": ["hook policy", "blocked events", "exception log"],
+      "iso27001": ["A.5.17", "A.8.12", "A.8.15"],
+      "iso42001": ["AI data governance"]
+    },
+    {
+      "id": "AIAG-EVID-006",
+      "title": "Evidence retention",
+      "objective": "Keep tamper-evident evidence for inventories, approvals, scans, denials, exceptions, and incidents.",
+      "owner": "Compliance",
+      "evidence": ["evidence envelopes", "hashes", "retention policy"],
+      "iso27001": ["A.5.33", "A.8.15", "A.8.16"],
+      "iso42001": ["AI monitoring and improvement"]
+    },
+    {
+      "id": "AIAG-EXC-007",
+      "title": "Exception handling",
+      "objective": "Time-bound exceptions require owner, reason, expiry, compensating control, and re-review.",
+      "owner": "Risk owner",
+      "evidence": ["exception ticket", "expiry", "approval", "closure"],
+      "iso27001": ["A.5.36", "A.8.32"],
+      "iso42001": ["AI risk treatment"]
+    },
+    {
+      "id": "AIAG-INC-008",
+      "title": "Agent incident response",
+      "objective": "Investigate unintended command execution, data exposure, policy bypass, unsafe extension behavior, and credential exposure.",
+      "owner": "Security/Incident Response",
+      "evidence": ["incident record", "timeline", "agent logs", "containment actions"],
+      "iso27001": ["A.5.24", "A.5.25", "A.5.26"],
+      "iso42001": ["AI incident process"]
+    }
+  ]
+}

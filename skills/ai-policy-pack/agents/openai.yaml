@@ -1,0 +1,8 @@
+interface:
+  display_name: "AI Policy Pack"
+  short_description: "Draft AI-agent governance policies"
+  brand_color: "#1D4ED8"
+  default_prompt: "Use $ai-policy-pack to draft an enforceable AI-agent governance policy baseline."
+
+policy:
+  allow_implicit_invocation: true

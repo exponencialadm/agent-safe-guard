@@ -1,0 +1,8 @@
+interface:
+  display_name: "Agent Inventory"
+  short_description: "Inventory agents, skills, MCPs, and extensions"
+  brand_color: "#246B5A"
+  default_prompt: "Use $agent-inventory to map AI agents, skills, MCP configs, and editor extensions in this environment."
+
+policy:
+  allow_implicit_invocation: true

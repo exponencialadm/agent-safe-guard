@@ -84,6 +84,19 @@ cmake --build build/native -j$(nproc)
 ./build/native/native/asg-install
 ```
 
+Install from npm as an explicit, no-postinstall launcher:
+
+```bash
+npm exec --yes @exponencial/agent-safe-guard -- --help
+npm exec --yes @exponencial/agent-safe-guard -- skills --list
+npm exec --yes @exponencial/agent-safe-guard -- skills --force
+npm exec --yes @exponencial/agent-safe-guard -- install
+```
+
+The npm package does not compile or install hooks during `npm install`. It only
+ships the launcher and skill pack. Native installation starts only when you run
+`agent-safe-guard install` or the equivalent `npm exec` command.
+
 Or use the local source installer wrapper after cloning:
 
 ```bash
@@ -302,9 +315,28 @@ asg-cli --catalog-install cloud-defense
 
 Catalog packages use SHA256 integrity checks. The daemon compiles catalog rule patterns into regex matchers at startup.
 
-## Codex Skill
+## Codex Skill Pack
 
-This repository also ships an installable Codex skill at [`skills/agent-safe-guard`](skills/agent-safe-guard/SKILL.md). Use it when an agent needs to install, configure, audit, or extend Agent Safe Guard hooks without loading the whole repository into context.
+This repository ships an installable Codex skill pack:
+
+- [`skills/agent-safe-guard`](skills/agent-safe-guard/SKILL.md) — install and operate native hooks.
+- [`skills/agent-inventory`](skills/agent-inventory/SKILL.md) — discover agents, skills, MCP configs, and editor extensions.
+- [`skills/extension-risk-audit`](skills/extension-risk-audit/SKILL.md) — audit VS Code/Cursor/Windsurf extension risk.
+- [`skills/evidence-sync`](skills/evidence-sync/SKILL.md) — package scan results as ISO evidence envelopes.
+- [`skills/ai-policy-pack`](skills/ai-policy-pack/SKILL.md) — render a practical AI-agent governance policy baseline.
+- [`skills/iso-remediacao`](skills/iso-remediacao/SKILL.md) — turn npm audit output into ISO 27001 A.8.8 evidence.
+
+Install the pack locally:
+
+```bash
+./scripts/install-skill-pack.sh --force
+```
+
+Or through npm:
+
+```bash
+npm exec --yes @exponencial/agent-safe-guard -- skills --force
+```
 
 ## Roadmap
 

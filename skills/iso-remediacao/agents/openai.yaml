@@ -1,0 +1,8 @@
+interface:
+  display_name: "ISO Remediação"
+  short_description: "Package npm audit remediation evidence"
+  brand_color: "#B91C1C"
+  default_prompt: "Use $iso-remediacao to turn npm audit output into ISO 27001 A.8.8 evidence."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,8 @@
+interface:
+  display_name: "Extension Risk Audit"
+  short_description: "Audit editor extensions for AI-agent risk"
+  brand_color: "#8A5A12"
+  default_prompt: "Use $extension-risk-audit to audit VS Code/Cursor-style extensions for AI-agent and shadow-AI risk."
+
+policy:
+  allow_implicit_invocation: true
