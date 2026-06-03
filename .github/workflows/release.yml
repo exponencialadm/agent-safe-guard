@@ -66,8 +66,17 @@ jobs:
 
       - name: Verify binaries are static
         run: |
-          file staging/bin/sgd | grep -q "statically linked"
-          file staging/bin/asg-cli | grep -q "statically linked"
+          for bin in staging/bin/sgd staging/bin/asg-cli; do
+            file "$bin"
+            if file "$bin" | grep -Eq "statically linked|static-pie linked"; then
+              continue
+            fi
+            if ldd "$bin" 2>&1 | grep -q "not a dynamic executable"; then
+              continue
+            fi
+            echo "$bin is not static" >&2
+            exit 1
+          done
 
       - name: Smoke test
         run: |
