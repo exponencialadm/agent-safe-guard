@@ -66,6 +66,7 @@ jobs:
 
       - name: Normalize staging bin
         run: |
+          sudo chown -R "$USER:$USER" staging
           bin_dir="$(find staging -type f -name sgd -exec dirname {} \; | head -n 1)"
           if [ -z "$bin_dir" ]; then
             find staging -maxdepth 5 -type f | sort
