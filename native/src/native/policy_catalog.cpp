@@ -22,10 +22,10 @@ namespace sg {
 namespace {
 
 constexpr std::string_view kOfficialCatalogUrl =
-    "https://raw.githubusercontent.com/regen-dev/agent-safe-guard-rules/main/rules/catalogs/github-core.json";
+    "https://raw.githubusercontent.com/exponencialadm/agent-safe-guard-rules/main/rules/catalogs/github-core.json";
 // Any previously pinned tag URL is migrated to kOfficialCatalogUrl on load.
 constexpr std::string_view kLegacyTagPrefix =
-    "https://raw.githubusercontent.com/regen-dev/agent-safe-guard-rules/rules-v";
+    "https://raw.githubusercontent.com/exponencialadm/agent-safe-guard-rules/rules-v";
 
 struct ParsedCatalogData {
   long catalog_version = 0;

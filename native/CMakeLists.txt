@@ -4,6 +4,7 @@ set(SG_COMMON_SOURCES
   src/native/policy_catalog.cpp
   src/native/policy_bridge.cpp
   src/native/json_extract.cpp
+  src/native/output_filter.cpp
   src/native/policy_post_tool_use.cpp
   src/native/policy_pre_compact.cpp
   src/native/policy_pre_tool_use.cpp
@@ -156,3 +157,21 @@ install(TARGETS sgd sg-hook-pre-tool-use sg-hook-post-tool-use
                 sg-hook-subagent-start sg-hook-subagent-stop
                 sg-hook-tool-error asg-cli asg-statusline asg-install asg-uninstall
                 RUNTIME DESTINATION bin)
+
+# --- Unit tests not tied to repomap (output_filter, etc.) ----------------
+# Always available when SG_BUILD_TESTS=ON, regardless of SG_BUILD_REPOMAP.
+if(SG_BUILD_TESTS)
+  set(SG_DOCTEST_INCLUDE_DIR_OF
+      "${CMAKE_SOURCE_DIR}/third_party/doctest/doctest")
+  if(NOT EXISTS "${SG_DOCTEST_INCLUDE_DIR_OF}/doctest.h")
+    message(FATAL_ERROR
+      "SG_BUILD_TESTS=ON but doctest.h missing at "
+      "${SG_DOCTEST_INCLUDE_DIR_OF}. Run: git submodule update --init --recursive")
+  endif()
+  add_executable(sg_output_filter_unit_tests
+    tests/output_filter_unit_tests.cpp)
+  target_link_libraries(sg_output_filter_unit_tests PRIVATE sg_common)
+  target_include_directories(sg_output_filter_unit_tests
+    PRIVATE ${SG_DOCTEST_INCLUDE_DIR_OF})
+  target_compile_options(sg_output_filter_unit_tests PRIVATE -Wall -Wextra)
+endif()

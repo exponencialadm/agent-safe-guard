@@ -7,7 +7,7 @@
 // so systemd restarts us with a clean slate.
 //
 // This is a hard backstop for the kind of unbounded growth that ate 33 GB
-// on 2026-05-01 (see ~/.mem/asg-repomap-leak-2026-05-01.md). systemd's
+// on 2026-05-01 (see docs/memory-safety.md). systemd's
 // MemoryMax= is the absolute last line of defense; this watchdog catches
 // the breach earlier and emits a structured event for postmortem.
 //

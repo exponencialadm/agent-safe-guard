@@ -223,7 +223,7 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  // Compile catalog rules from installed marketplace packages.
+  // Compile catalog rules from installed packages.
   {
     std::string compile_error;
     const auto ext_packages = sg::LoadExternalPackageCatalog();
@@ -237,8 +237,7 @@ int main(int argc, char** argv) {
   // systemd restarts us cleanly. The kernel-level cap (MemoryMax= in
   // sgd.service) is the absolute last line of defense; this watchdog catches
   // the breach earlier and emits a structured event for postmortem.
-  // See ~/.mem/asg-repomap-leak-2026-05-01.md for the incident that
-  // motivated this.
+  // See docs/memory-safety.md for the incident pattern that motivated this.
   (void)sg::StartRssWatchdogFromEnv();
 
   sg::NotifySystemdReady("sgd online");

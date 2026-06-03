@@ -111,7 +111,7 @@ std::string EvaluateRepomapRender(std::string_view request_json) {
   }
   // Hard cap on the source-file count. Default 5000 is plenty for any real
   // project; the cap exists to refuse $HOME-scale walks. See
-  // ~/.mem/asg-repomap-leak-2026-05-01.md.
+  // docs/memory-safety.md.
   ensure_opts.build.max_files = static_cast<std::size_t>(
       EnvInt("SG_REPOMAP_MAX_FILES", 5000));
   ensure_opts.allow_unsafe_root = EnvBool("SG_REPOMAP_ALLOW_UNSAFE_ROOT", false);

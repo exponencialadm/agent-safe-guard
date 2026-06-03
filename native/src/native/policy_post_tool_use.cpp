@@ -2,6 +2,7 @@
 
 #include "sg/client_runtime.hpp"
 #include "sg/json_extract.hpp"
+#include "sg/output_filter.hpp"
 #include "sg/policy_bridge.hpp"
 #include "sg/rule_engine.hpp"
 
@@ -492,6 +493,11 @@ std::string EvaluatePostToolUseImpl(std::string_view request_json) {
       output_size = static_cast<int>(output.size());
       reminder_pre_stripped = true;
     }
+  }
+
+  if (tool_name == "Bash" && MaybeApplyOutputFilter(command, &output)) {
+    output_size = static_cast<int>(output.size());
+    reminder_pre_stripped = true;
   }
 
   auto exit_clean_or_suppress = [&]() {

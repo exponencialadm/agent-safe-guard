@@ -39,7 +39,7 @@ This directory contains the active native runtime for `agent-safe-guard`.
 - Failure mode: strict fail-closed (`{"continue":false,"stopReason":"..."}`) when daemon/socket path is unavailable.
 - Feature/package config: legacy hook booleans and `SG_PACKAGE_*` modes are read from `~/.claude/.safeguard/features.env` (or `$SG_FEATURES_FILE`).
 - Policy state lives under `~/.claude/.safeguard/policy/` (`packages.json`, `installed.json`, `catalogs.json`, cached catalogs, `stats/*.json`).
-- First-party catalog bootstrap should use an immutable tag/release URL, not `main`; current seed URL is `https://raw.githubusercontent.com/regen-dev/agent-safe-guard-rules/rules-v0.2.0/rules/catalogs/github-core.json`.
+- Default first-party catalog seed URL: `https://raw.githubusercontent.com/exponencialadm/agent-safe-guard-rules/main/rules/catalogs/github-core.json`.
 - Installed hook entrypoints: `~/.claude/hooks/asg-*` symlinks to these binaries.
 
 ## Event logging

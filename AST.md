@@ -347,7 +347,7 @@ target_link_libraries(asg-repomap PRIVATE sg_common sg_repomap)
 install(TARGETS asg-repomap RUNTIME DESTINATION bin)
 ```
 
-Compile flags: `-O2 -march=znver4 -pipe -Wall -Wextra` (per global CLAUDE.md
+Compile flags: `-O2 -march=znver4 -pipe -Wall -Wextra` (per contributor policy
 — this is znver4 hardware).
 
 ### Binary size impact
@@ -438,7 +438,7 @@ Session-start hook client:
 
 ---
 
-## 12. Testing (TDD — mandatory per CLAUDE.md)
+## 12. Testing (TDD — mandatory per contributor policy)
 
 Every phase lands tests first. No code merges without tests. Matches the
 existing discipline in this repo.
@@ -620,7 +620,7 @@ for Phase 0.
 
 When a fresh session starts from this file:
 
-1. [ ] Re-read `CLAUDE.md` + `native/README.md` + `docs/rule-engine-architecture.md`
+1. [ ] Re-read `docs/memory-safety.md` + `native/README.md` + `docs/rule-engine-architecture.md`
 2. [ ] Confirm the locked decisions in section 14 are still wanted (should
        be fast — user already signed off)
 3. [ ] Phase 0: add submodules, CMake wiring, compile, smoke test

@@ -47,7 +47,7 @@ struct EnsureStats {
 //
 // Refuses unsafe roots ($HOME, /, /tmp, /var, /etc, /usr, /opt, /mnt, /media)
 // and (by default) directories that are not git working trees. See
-// `~/.mem/asg-repomap-leak-2026-05-01.md` for the incident that motivated this.
+// docs/memory-safety.md for the incident pattern that motivated this.
 Index EnsureFresh(std::string_view repo_root, const EnsureOptions& opts,
                   EnsureStats* stats, std::string* error);
 

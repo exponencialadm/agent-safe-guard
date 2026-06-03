@@ -9,8 +9,8 @@ NATIVE_ASAN_BUILD_DIR ?= ./build/native-asan
 # Memory-safety toolchain. ASan is the default mandate (no external dep,
 # fast, leak-detecting). Valgrind is the heavier optional check kept for
 # release pipelines and diffs that touch allocator-sensitive code.
-# CLAUDE.md "Memory & resource safety" mandates that one of these MUST run
-# in every CI build — the test-memory target is the contract.
+# docs/memory-safety.md mandates that one sanitizer gate MUST run in every
+# CI build — the test-memory target is the contract.
 ASAN_OPTIONS_DEFAULT ?= detect_leaks=1:halt_on_error=1:abort_on_error=0:print_stats=0
 UBSAN_OPTIONS_DEFAULT ?= halt_on_error=1:abort_on_error=0:print_stacktrace=1
 VALGRIND ?= valgrind
@@ -66,7 +66,7 @@ native-build: native-configure
 
 # AddressSanitizer + UBSan build, with C++ unit tests enabled. Every CI run
 # of `make test-memory` rebuilds this from scratch; do NOT skip it. See
-# CLAUDE.md "Memory & resource safety" for why this is non-negotiable.
+# docs/memory-safety.md for why this is non-negotiable.
 native-build-asan:
 	cmake -S . -B $(NATIVE_ASAN_BUILD_DIR) \
 		-DSG_BUILD_NATIVE=ON \
@@ -83,9 +83,13 @@ test-native-unit: native-build-asan
 	ASAN_OPTIONS=$(ASAN_OPTIONS_DEFAULT) \
 	UBSAN_OPTIONS=$(UBSAN_OPTIONS_DEFAULT) \
 	$(NATIVE_ASAN_BUILD_DIR)/native/sg_repomap_unit_tests
+	@echo "=== sg_output_filter_unit_tests under ASan/UBSan ==="
+	ASAN_OPTIONS=$(ASAN_OPTIONS_DEFAULT) \
+	UBSAN_OPTIONS=$(UBSAN_OPTIONS_DEFAULT) \
+	$(NATIVE_ASAN_BUILD_DIR)/native/sg_output_filter_unit_tests
 
 # Full memory check: ASan/UBSan unit tests. This is the target referenced
-# from CLAUDE.md as the mandatory pre-merge gate.
+# from docs/memory-safety.md as the mandatory pre-merge gate.
 test-memory: test-native-unit
 	@echo ""
 	@echo "=== Memory check passed (ASan + UBSan, unit suite) ==="
@@ -122,6 +126,18 @@ test-native-post-smoke: native-build
 	SG_POST_TOOL_HOOK="$(PWD)/$(NATIVE_BUILD_DIR)/native/sg-hook-post-tool-use" \
 	SG_DAEMON_SOCKET="$$SOCK" \
 	./tests/test_helper/bats-core/bin/bats --jobs 1 --timing --print-output-on-failure tests/integration/post_tool_use.bats
+
+test-native-output-filter-smoke: native-build
+	SOCK=/tmp/agent-safe-guard/sgd-output-filter-smoke.sock; \
+	mkdir -p /tmp/agent-safe-guard; \
+	rm -f "$$SOCK"; \
+	./$(NATIVE_BUILD_DIR)/native/sgd --socket "$$SOCK" >/tmp/sgd-output-filter-smoke.log 2>&1 & \
+	PID=$$!; \
+	trap 'kill $$PID >/dev/null 2>&1 || true; kill -9 $$PID >/dev/null 2>&1 || true' EXIT; \
+	for i in $$(seq 1 50); do [ -S "$$SOCK" ] && break; sleep 0.1; done; \
+	SG_POST_TOOL_HOOK="$(PWD)/$(NATIVE_BUILD_DIR)/native/sg-hook-post-tool-use" \
+	SG_DAEMON_SOCKET="$$SOCK" \
+	./tests/test_helper/bats-core/bin/bats --jobs 1 --timing --print-output-on-failure tests/integration/output_filter.bats
 
 test-native-permission-smoke: native-build
 	SOCK=/tmp/agent-safe-guard/sgd-permission-smoke.sock; \

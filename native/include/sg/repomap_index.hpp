@@ -31,7 +31,7 @@ struct BuildOptions {
   // Hard cap on the number of source files indexed in one pass. The walker
   // aborts when this is hit (caller can detect via CollectSourceFiles return).
   // Bound exists because $HOME-sized walks otherwise eat unbounded memory.
-  // See `~/.mem/asg-repomap-leak-2026-05-01.md` for the incident.
+  // See docs/memory-safety.md for the incident pattern.
   std::size_t max_files = 5000;
 };
 

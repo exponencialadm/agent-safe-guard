@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   release-please:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
@@ -27,19 +27,21 @@ jobs:
   build:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       VERSION: ${{ needs.release-please.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          submodules: recursive
 
       - name: Build static binaries (musl)
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/src" \
             -w /src \
-            alpine:latest sh -c '
+            alpine:3.22 sh -c '
               apk add --no-cache cmake g++ make linux-headers
               cmake -S . -B build/release \
                 -DSG_BUILD_NATIVE=ON \
@@ -69,12 +71,15 @@ jobs:
 
       - name: Package .deb
         run: |
-          # Install nfpm
-          curl -sfL https://github.com/goreleaser/nfpm/releases/latest/download/nfpm_linux_amd64.tar.gz \
-            | tar xz -C /usr/local/bin nfpm
+          NFPM_VERSION=2.46.3
+          NFPM_SHA256=9170d25ea056d7329def38134b2bcad98d02d221f8331610dcd619e84d28c565
+          curl -sfL \
+            "https://github.com/goreleaser/nfpm/releases/download/v${NFPM_VERSION}/nfpm_${NFPM_VERSION}_Linux_x86_64.tar.gz" \
+            -o /tmp/nfpm.tar.gz
+          echo "${NFPM_SHA256}  /tmp/nfpm.tar.gz" | sha256sum -c -
+          tar xz -C /usr/local/bin -f /tmp/nfpm.tar.gz nfpm
           chmod +x /usr/local/bin/nfpm
 
-          # Build deb
           nfpm pkg --packager deb \
             --target "dist/agent-safe-guard_${VERSION}_amd64.deb"
 

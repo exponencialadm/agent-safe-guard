@@ -4,7 +4,7 @@
 
 If you discover a security vulnerability in agent-safe-guard, please report it responsibly.
 
-**Email:** Open a private security advisory on GitHub via the [Security tab](https://github.com/regen-dev/agent-safe-guard/security/advisories/new).
+**Email:** Open a private security advisory on GitHub via the [Security tab](https://github.com/exponencialadm/agent-safe-guard/security/advisories/new).
 
 Please include:
 

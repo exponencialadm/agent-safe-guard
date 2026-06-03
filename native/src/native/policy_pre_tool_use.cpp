@@ -1486,7 +1486,7 @@ std::string EvaluatePreToolUse(std::string_view request_json) {
   const Transaction tx =
       BuildTransaction(request_json, cfg, is_subagent, agent_id, agent_type, budget);
   std::vector<CompiledRule> rules = BuildRules();
-  // Append catalog/marketplace rules after built-in rules.
+  // Append catalog rules after built-in rules.
   const auto catalog_rules = GetCatalogCompiledRules(RulePhase::kPreToolUse);
   rules.insert(rules.end(), catalog_rules.begin(), catalog_rules.end());
   const EngineResult result = EvaluateRules(tx, rules);
@@ -1503,7 +1503,7 @@ std::vector<RuleMetadata> ListPreToolUseRules() {
   for (const auto& rule : BuildRules()) {
     metadata.push_back(rule.meta);
   }
-  // Include catalog/marketplace rules.
+  // Include catalog rules.
   const auto catalog = ListCatalogRulesForPhase(RulePhase::kPreToolUse);
   metadata.insert(metadata.end(), catalog.begin(), catalog.end());
   return metadata;

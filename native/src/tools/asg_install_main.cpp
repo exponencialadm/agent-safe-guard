@@ -593,7 +593,7 @@ void InstallSystemdUnits(const Options& options) {
       // Memory-safety backstop. The in-process RSS watchdog catches a
       // runaway operation around 1 GiB and exits cleanly so systemd restarts.
       // MemoryMax is the kernel cgroup absolute cap. See
-      // ~/.mem/asg-repomap-leak-2026-05-01.md.
+      // docs/memory-safety.md.
       "MemoryHigh=1G\nMemoryMax=2G\nTasksMax=64\n";
   WriteTextFile(socket_unit, socket_text);
   WriteTextFile(service_unit, service_text);

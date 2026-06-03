@@ -1,9 +1,7 @@
 // Unit + adversarial stress tests for sg::repomap.
 //
-// These tests exercise the bounds added on 2026-05-01 after the daemon ate
-// 33 GB of RAM running PageRank in $HOME. See
-// `~/.mem/asg-repomap-leak-2026-05-01.md` and the project CLAUDE.md
-// "Memory & resource safety" section for the incident and the rules.
+// These tests exercise the bounds added on 2026-05-01 after an unbounded
+// PageRank walk exhausted memory. See docs/memory-safety.md for the rules.
 //
 // Build with sanitizer enabled (`-DSG_SANITIZER=address`) so leaks and
 // out-of-bounds accesses are caught here, not in production.

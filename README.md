@@ -1,9 +1,9 @@
 # agent-safe-guard
 
-[![CI](https://github.com/regen-dev/agent-safe-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/regen-dev/agent-safe-guard/actions/workflows/ci.yml)
+[![CI](https://github.com/exponencialadm/agent-safe-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/exponencialadm/agent-safe-guard/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Native safety hooks for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) on Linux.
+Native safety hooks for AI coding agents on Linux. The current runtime integrates with [Claude Code](https://docs.anthropic.com/en/docs/claude-code) hooks; the policy model is designed for agent skills, VS Code-style assistants, Codex-style workflows, and OpenClaw-like developer agents.
 
 `agent-safe-guard` sits between Claude Code and its tool calls. It blocks destructive commands, trims noisy output, guards large reads, enforces subagent budgets, records audit events, and exposes a native rule/package console.
 
@@ -28,7 +28,7 @@ AI coding agents execute shell commands, read files, and make permission decisio
 - Masks secrets and credentials in file reads
 - **Injects a ranked tree-sitter repo map at SessionStart so Claude stops re-reading files every session** (new — see [Repo Map](#repo-map-primer) below)
 - Tracks session metrics, rule matches, tool latency, compaction, and subagent usage
-- Supports extension packages from remote catalogs (marketplace)
+- Supports extension rule packages from remote catalogs with SHA256 integrity checks
 - Lets you inspect and override policy at the package and rule level with `asg-cli`
 
 ## Screenshots
@@ -76,12 +76,18 @@ Requirements:
 Installation from source:
 
 ```bash
-git clone https://github.com/regen-dev/agent-safe-guard.git
+git clone https://github.com/exponencialadm/agent-safe-guard.git
 cd agent-safe-guard
 git submodule update --init --recursive   # required — tree-sitter grammars + doctest + bats
 cmake -S . -B build/native -DSG_BUILD_NATIVE=ON
 cmake --build build/native -j$(nproc)
 ./build/native/native/asg-install
+```
+
+Or use the local source installer wrapper after cloning:
+
+```bash
+./scripts/install-from-source.sh
 ```
 
 Notes:
@@ -285,7 +291,7 @@ Full details in [docs/repomap.md](docs/repomap.md).
 
 ## Extension Packages (Catalog)
 
-`agent-safe-guard` supports installing additional rule packages from remote catalogs. The default catalog is hosted at [regen-dev/agent-safe-guard-rules](https://github.com/regen-dev/agent-safe-guard-rules).
+`agent-safe-guard` supports installing additional rule packages from remote catalogs. The default catalog is hosted at [exponencialadm/agent-safe-guard-rules](https://github.com/exponencialadm/agent-safe-guard-rules).
 
 Sync and install via the `asg-cli` Catalog tab, or non-interactively:
 
@@ -295,6 +301,10 @@ asg-cli --catalog-install cloud-defense
 ```
 
 Catalog packages use SHA256 integrity checks. The daemon compiles catalog rule patterns into regex matchers at startup.
+
+## Codex Skill
+
+This repository also ships an installable Codex skill at [`skills/agent-safe-guard`](skills/agent-safe-guard/SKILL.md). Use it when an agent needs to install, configure, audit, or extend Agent Safe Guard hooks without loading the whole repository into context.
 
 ## Roadmap
 

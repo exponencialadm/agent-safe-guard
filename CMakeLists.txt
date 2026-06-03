@@ -16,8 +16,8 @@ option(SG_BUILD_TESTS "Build C++ unit tests (uses third_party/doctest)" OFF)
 # Sanitizer mode for bounds-checked test/debug builds. Acceptable values:
 #   address, undefined, address;undefined, thread, leak, off (or empty).
 # Memory safety in this project is non-negotiable — every CI build runs the
-# unit suite with SG_SANITIZER=address. See CLAUDE.md "Memory & resource
-# safety" for the contract that mandates this.
+# unit suite with SG_SANITIZER=address. See docs/memory-safety.md for the
+# contract that mandates this.
 set(SG_SANITIZER "" CACHE STRING "Sanitizer to enable (address, undefined, thread, ...)")
 
 if(SG_SANITIZER AND NOT SG_SANITIZER STREQUAL "off")

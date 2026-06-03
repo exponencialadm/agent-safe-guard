@@ -3,7 +3,7 @@
 ## Development Setup
 
 ```bash
-git clone https://github.com/regen-dev/agent-safe-guard.git
+git clone https://github.com/exponencialadm/agent-safe-guard.git
 cd agent-safe-guard
 git submodule update --init --recursive
 cmake -S . -B build/native -DSG_BUILD_NATIVE=ON
@@ -51,7 +51,7 @@ make test-native-rule-audit  # Rule compilation audit
 
 ## Adding Rules
 
-Built-in rules live in the native daemon source. Extension rules go in the [catalog repo](https://github.com/regen-dev/agent-safe-guard-rules).
+Built-in rules live in the native daemon source. Extension rules go in the [catalog repo](https://github.com/exponencialadm/agent-safe-guard-rules).
 
 Every new rule must have a bats test proving it blocks or allows the expected input.
 

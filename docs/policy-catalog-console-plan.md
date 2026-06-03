@@ -21,7 +21,7 @@ primarily authored in local machine state.
 
 Current decision:
 
-- curated rules live in a dedicated `regen-dev` repository
+- curated rules live in a dedicated `exponencialadm` repository
 - contributions happen through pull requests
 - accepted rule changes are committed to `main`
 - local `agent-safe-guard` installations sync committed rule metadata and decide
@@ -381,7 +381,7 @@ rewritten.
 V1 should support local package install first, then trusted remote catalogs.
 
 The curated first-party catalog should come from the dedicated GitHub rules
-repository managed by `regen-dev`. Generic third-party catalogs can still be
+repository managed by `exponencialadm`. Generic third-party catalogs can still be
 added later, but the default operator experience should start with the
 first-party GitHub-backed source of truth.
 

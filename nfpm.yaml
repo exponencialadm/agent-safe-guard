@@ -2,10 +2,10 @@ name: agent-safe-guard
 arch: amd64
 platform: linux
 version: 1.0.0
-maintainer: regen-dev
-description: Native safety hooks for Claude Code
-vendor: regen-dev
-homepage: https://github.com/regen-dev/agent-safe-guard
+maintainer: Exponencial Administração & Tecnologia
+description: Native safety hooks for AI coding agents
+vendor: Exponencial Administração & Tecnologia
+homepage: https://github.com/exponencialadm/agent-safe-guard
 license: MIT
 section: utils
 priority: optional
