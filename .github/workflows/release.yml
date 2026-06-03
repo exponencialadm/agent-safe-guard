@@ -64,6 +64,21 @@ jobs:
               DESTDIR=/src/staging cmake --install build/release --prefix ""
             '
 
+      - name: Normalize staging bin
+        run: |
+          bin_dir="$(find staging -type f -name sgd -exec dirname {} \; | head -n 1)"
+          if [ -z "$bin_dir" ]; then
+            find staging -maxdepth 5 -type f | sort
+            echo "sgd not found under staging" >&2
+            exit 1
+          fi
+          if [ "$bin_dir" != "staging/bin" ]; then
+            mkdir -p staging/bin
+            cp -a "$bin_dir"/. staging/bin/
+          fi
+          test -x staging/bin/sgd
+          test -x staging/bin/asg-cli
+
       - name: Verify binaries are static
         run: |
           for bin in staging/bin/sgd staging/bin/asg-cli; do
